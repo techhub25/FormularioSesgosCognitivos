@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evaluación de Inteligencia Emocional y Perfil Financiero</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Evaluación de Inteligencia Emocional y Perfil Financiero</h1>
+    </header>
+
+    <main>
+      <div id="intro" class="section active">
+        <h2>Bienvenido a la Evaluación</h2>
+        <p>Este cuestionario evalúa tu inteligencia emocional, perfil de riesgo y sesgos cognitivos.</p>
+        <p>Por favor, completa todos los campos para comenzar.</p>
+        
+        <form id="user-info-form">
+          <div class="form-group">
+            <label for="nombre">Nombre Completo*</label>
+            <input type="text" id="nombre" name="nombre" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="correo">Correo Electrónico*</label>
+            <input type="email" id="correo" name="correo" required>
+          </div>
+          
+          <button type="submit" class="btn">Comenzar Evaluación</button>
+        </form>
+      </div>
+
+      <div id="test-emocional" class="section">
+        <h2>Test de Inteligencia Emocional</h2>
+        <p>Indica tu grado de acuerdo con las siguientes afirmaciones:</p>
+        <div class="scale-legend">
+          <span>1 = Nada de acuerdo</span>
+          <span>2 = Algo de acuerdo</span>
+          <span>3 = Bastante de acuerdo</span>
+          <span>4 = Muy de acuerdo</span>
+          <span>5 = Completamente de acuerdo</span>
+        </div>
+        
+        <form id="emocional-form">
+          <div id="emocional-questions"></div>
+          
+          <div class="navigation">
+            <button type="submit" class="btn">Continuar</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="perfil-riesgo" class="section">
+        <h2>Perfil de Riesgo</h2>
+        <p>Selecciona la opción que mejor refleje tu situación o preferencia:</p>
+        
+        <form id="riesgo-form">
+          <div id="riesgo-questions"></div>
+          
+          <div class="navigation">
+            <button type="button" class="btn back-btn" data-target="test-emocional">Anterior</button>
+            <button type="submit" class="btn">Continuar</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="sesgos-cognitivos" class="section">
+        <h2>Sesgos Cognitivos y Heurísticas</h2>
+        <p>Indica tu grado de acuerdo con las siguientes afirmaciones:</p>
+        <div class="scale-legend">
+          <span>1 = Totalmente en desacuerdo</span>
+          <span>2 = Muy en desacuerdo</span>
+          <span>3 = Algo en desacuerdo</span>
+          <span>4 = Algo de acuerdo</span>
+          <span>5 = Muy de acuerdo</span>
+          <span>6 = Totalmente de acuerdo</span>
+        </div>
+        
+        <form id="sesgos-form">
+          <div id="sesgos-questions"></div>
+          
+          <div class="navigation">
+            <button type="button" class="btn back-btn" data-target="perfil-riesgo">Anterior</button>
+            <button type="submit" class="btn">Ver Resultados</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="resultados" class="section">
+        <h2>Tus Resultados</h2>
+        
+        <div class="results-container">
+          <div class="result-section">
+            <h3>Inteligencia Emocional</h3>
+            <div class="result-item">
+              <h4>Atención</h4>
+              <p id="resultado-atencion"></p>
+              <div class="result-bar">
+                <div id="bar-atencion" class="bar-fill"></div>
+              </div>
+            </div>
+            <div class="result-item">
+              <h4>Claridad</h4>
+              <p id="resultado-claridad"></p>
+              <div class="result-bar">
+                <div id="bar-claridad" class="bar-fill"></div>
+              </div>
+            </div>
+            <div class="result-item">
+              <h4>Reparación</h4>
+              <p id="resultado-reparacion"></p>
+              <div class="result-bar">
+                <div id="bar-reparacion" class="bar-fill"></div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="result-section">
+            <h3>Perfil de Riesgo</h3>
+            <div class="result-item">
+              <p id="resultado-riesgo"></p>
+              <div class="result-bar">
+                <div id="bar-riesgo" class="bar-fill"></div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="result-section">
+            <h3>Sesgos Cognitivos</h3>
+            <div class="result-grid">
+              <div class="result-item">
+                <h4>Heurística de Representatividad</h4>
+                <p id="resultado-representatividad"></p>
+              </div>
+              <div class="result-item">
+                <h4>Sobreconfianza</h4>
+                <p id="resultado-sobreconfianza"></p>
+              </div>
+              <div class="result-item">
+                <h4>Sesgo de Anclaje</h4>
+                <p id="resultado-anclaje"></p>
+              </div>
+              <div class="result-item">
+                <h4>Falacia del Jugador</h4>
+                <p id="resultado-falacia"></p>
+              </div>
+              <div class="result-item">
+                <h4>Sesgo de Capacidad</h4>
+                <p id="resultado-capacidad"></p>
+              </div>
+              <div class="result-item">
+                <h4>Aversión a la Pérdida</h4>
+                <p id="resultado-aversion-perdida"></p>
+              </div>
+              <div class="result-item">
+                <h4>Aversión al Remordimiento</h4>
+                <p id="resultado-aversion-remordimiento"></p>
+              </div>
+              <div class="result-item">
+                <h4>Contabilidad Mental</h4>
+                <p id="resultado-contabilidad"></p>
+              </div>
+              <div class="result-item">
+                <h4>Efecto Rebaño</h4>
+                <p id="resultado-rebano"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="navigation">
+          <button type="button" id="restart-btn" class="btn">Reiniciar Evaluación</button>
+        </div>
+      </div>
+
+      <div id="loading" class="section">
+        <div class="loader"></div>
+        <p>Procesando resultados...</p>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Evaluación de Inteligencia Emocional y Perfil Financiero</p>
+    </footer>
+  </div>
+
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
