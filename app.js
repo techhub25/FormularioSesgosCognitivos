@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // URL del Google Apps Script Web App (reemplazar con tu URL)
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyUDHUzclO7Ap6DxKrHsoaoBd8CaYELWIlgZzhugf4-1cOnJW9Mvm9Mmo9L4R_uy5SMyA/exec"
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzyc-t2vEXWUvSnXzDQ_G-QNnei2YS0IcDjpPqJ-Yit3ZdIiGkaj7lnSe3RAgVtBzfM3Q/exec "
 
   // Preguntas de Inteligencia Emocional (1-24)
   const preguntasEmocionales = [
