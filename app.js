@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "Probablemente dejar que la tasa de interés fluctúe",
         "Definitivamente dejar que la tasa de interés fluctúe",
       ],
-      valores: [1, 2, 3, 4],
+      valores: [1, 2, 2, 3],
     },
     {
       pregunta: "Te dan 1.000$ para invertir. Debes elegir entre:",
@@ -720,7 +720,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Clasificar claridad
   function clasificarClaridad(puntaje) {
     if (puntaje <= 25)
-      return { nivel: "Baja", descripcion: "Baja claridad emocional.", porcentaje: (puntaje / 40) * 100 }
+      return { nivel: "Baja", descripcion: "Baja claridad emocional.", porcentaje: (puntaje / 40) * 100 } 
     if (puntaje <= 35)
       return { nivel: "Adecuada", descripcion: "Adecuada claridad emocional.", porcentaje: (puntaje / 40) * 100 }
     return { nivel: "Excelente", descripcion: "Excelente claridad emocional.", porcentaje: (puntaje / 40) * 100 }
@@ -733,11 +733,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const porcentaje = (puntaje / 35) * 100
 
     // Corregimos los umbrales según los datos correctos para la reparación (ajustados para 7 preguntas)
-    if (puntaje <= 21) {
+    if (puntaje <= 23) {
       console.log("Clasificado como: Baja")
       return { nivel: "Baja", descripcion: "Baja capacidad de reparación.", porcentaje: porcentaje }
     }
-    if (puntaje <= 30) {
+    if (puntaje <= 25) {
       console.log("Clasificado como: Adecuada")
       return { nivel: "Adecuada", descripcion: "Adecuada capacidad de reparación.", porcentaje: porcentaje }
     }
@@ -786,6 +786,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Clasificar sesgo según su media
   function clasificarSesgo(media) {
+    if (media >= 1 && media <= 1.83) return "Nulo"
     if (media >= 1.83 && media <= 2.65) return "Impacto bajo"
     if (media >= 2.66 && media <= 3.48) return "Impacto bajo moderado"
     if (media >= 3.49 && media <= 4.31) return "Impacto moderado"
