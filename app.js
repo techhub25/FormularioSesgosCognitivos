@@ -357,7 +357,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const optionLabels = [
         "Nada de acuerdo",
         "Algo de acuerdo",
-        "Bastante de acuerdo",
+        "De acuerdo",
         "Muy de acuerdo",
         "Completamente de acuerdo",
       ]
