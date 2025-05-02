@@ -1,15 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
   // Variables para almacenar respuestas
   let userData = {
-    nombre: "",
+    //nombre: "",
     correo: "",
     respuestasEmocionales: [],
     respuestasRiesgo: [],
+    respuestasFiltro: [], // Nueva array para las preguntas filtro
     respuestasSesgos: [],
   }
 
   // URL del Google Apps Script Web App (reemplazar con tu URL)
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzyc-t2vEXWUvSnXzDQ_G-QNnei2YS0IcDjpPqJ-Yit3ZdIiGkaj7lnSe3RAgVtBzfM3Q/exec "
+  const SCRIPT_URL =
+    "https://script.google.com/macros/s/AKfycbx0dNvCT6Sts-5We8rdJm8Xa5xOxBkRzbrDi5GsmRE0pLQweQo3jhge0uEaHa9iwz0-fw/exec "
 
   // Preguntas de Inteligencia Emocional (1-24)
   const preguntasEmocionales = [
@@ -61,7 +63,8 @@ document.addEventListener("DOMContentLoaded", () => {
       valores: [1, 2, 3, 4],
     },
     {
-      pregunta: "Salvaste suficiente dinero para irte a la vacación de tus sueños. Tres semanas antes, pierdes tu trabajo. Qué haces:",
+      pregunta:
+        "Salvaste suficiente dinero para irte a la vacación de tus sueños. Tres semanas antes, pierdes tu trabajo. Qué haces:",
       opciones: [
         "Cancelas la vacación",
         "Vas a una más modesta",
@@ -85,7 +88,8 @@ document.addEventListener("DOMContentLoaded", () => {
       valores: [1, 2, 3],
     },
     {
-      pregunta: "Basado en su experiencia, qué tan cómodo está usted en invertir su dinero en acciones o en fondos mutuales:",
+      pregunta:
+        "Basado en su experiencia, qué tan cómodo está usted en invertir su dinero en acciones o en fondos mutuales:",
       opciones: ["Nada cómodo", "Un poco cómodo", "Muy cómodo"],
       valores: [1, 2, 3],
     },
@@ -105,7 +109,8 @@ document.addEventListener("DOMContentLoaded", () => {
       valores: [1, 2, 3, 4],
     },
     {
-      pregunta: "Heredas una casa de 80.000$. La casa está en una buena urbanización y esperas que se aprecie más rápido que la inflación. Si la alquilas mañana, podrás obtener 600$ mensuales, pero si la reparas y actualizas, podrás obtener 800$. Para poder repararla tendrás que tomar un préstamo. Qué haces:",
+      pregunta:
+        "Heredas una casa de 80.000$. La casa está en una buena urbanización y esperas que se aprecie más rápido que la inflación. Si la alquilas mañana, podrás obtener 600$ mensuales, pero si la reparas y actualizas, podrás obtener 800$. Para poder repararla tendrás que tomar un préstamo. Qué haces:",
       opciones: ["La vendo", "Rento la casa como está", "Reparo y actualizo, luego la rento"],
       valores: [1, 2, 3],
     },
@@ -118,7 +123,8 @@ document.addEventListener("DOMContentLoaded", () => {
       valores: [1, 3],
     },
     {
-      pregunta: "Tomaste un empleo en una compañía en crecimiento donde te pagan 6.000$ al año. Al año de trabajar en esta te ofrecen un bono, cuál escoges:",
+      pregunta:
+        "Tomaste un empleo en una compañía en crecimiento donde te pagan 6.000$ al año. Al año de trabajar en esta te ofrecen un bono, cuál escoges:",
       opciones: [
         "Un contrato por 5 años",
         "25.000$ en efectivo",
@@ -127,7 +133,8 @@ document.addEventListener("DOMContentLoaded", () => {
       valores: [1, 2, 3],
     },
     {
-      pregunta: "Algunos expertos predicen que el precio de activos como el oro, las joyas, los objetos de colección y los bienes raíces (activos tangibles) aumentará; sin embargo, los precios de los bonos podrían caer; sin embargo, los expertos coinciden en que los bonos gubernamentales son relativamente seguros. La mayoría de sus inversiones se encuentran actualmente en bonos gubernamentales con altos intereses. Qué haría usted:",
+      pregunta:
+        "Algunos expertos predicen que el precio de activos como el oro, las joyas, los objetos de colección y los bienes raíces (activos tangibles) aumentará; sin embargo, los precios de los bonos podrían caer; sin embargo, los expertos coinciden en que los bonos gubernamentales son relativamente seguros. La mayoría de sus inversiones se encuentran actualmente en bonos gubernamentales con altos intereses. Qué haría usted:",
       opciones: [
         "Me quedo con los bonos",
         "Vendo mis bonos, pongo la mitad en una cuenta de ahorros y con la otra compró activos tangibles",
@@ -147,7 +154,8 @@ document.addEventListener("DOMContentLoaded", () => {
       valores: [1, 2, 3, 4],
     },
     {
-      pregunta: "Considerando las mejores y peores rentabilidades de las cuatro opciones de inversión a continuación, cuál preferiría:",
+      pregunta:
+        "Considerando las mejores y peores rentabilidades de las cuatro opciones de inversión a continuación, cuál preferiría:",
       opciones: [
         "Ganancia de $200 en el mejor de los casos; pérdida de $0 en el peor de los casos",
         "Ganancia de $800 en el mejor de los casos; pérdida de $200 en el peor de los casos",
@@ -157,7 +165,8 @@ document.addEventListener("DOMContentLoaded", () => {
       valores: [1, 2, 3, 4],
     },
     {
-      pregunta: "Supongamos que está solicitando una hipoteca. Las tasas de interés han bajado en los últimos meses. Es posible que esta tendencia continúe. Sin embargo, algunos economistas predicen que las tasas subirán. Tiene la opción de fijar la tasa de interés de su hipoteca o dejarla fluctuar. Si fija la tasa, obtendrá la tasa actual, incluso si las tasas de interés suben. Si las tasas bajan, tendrá que conformarse con la tasa fijada más alta. Planea vivir en la casa durante al menos tres años. Qué haría:",
+      pregunta:
+        "Supongamos que está solicitando una hipoteca. Las tasas de interés han bajado en los últimos meses. Es posible que esta tendencia continúe. Sin embargo, algunos economistas predicen que las tasas subirán. Tiene la opción de fijar la tasa de interés de su hipoteca o dejarla fluctuar. Si fija la tasa, obtendrá la tasa actual, incluso si las tasas de interés suben. Si las tasas bajan, tendrá que conformarse con la tasa fijada más alta. Planea vivir en la casa durante al menos tres años. Qué haría:",
       opciones: [
         "Fijar la tasa de interés definitivamente",
         "Probablemente fijar la tasa de interés",
@@ -183,7 +192,8 @@ document.addEventListener("DOMContentLoaded", () => {
       valores: [1, 3],
     },
     {
-      pregunta: "Supongamos que un familiar le dejó una herencia de $100,000, estipulando en su testament que invierta todo el dinero en una de las siguientes opciones:",
+      pregunta:
+        "Supongamos que un familiar le dejó una herencia de $100,000, estipulando en su testamento que invierta todo el dinero en una de las siguientes opciones:",
       opciones: [
         "Una cuenta de ahorros o un fondo mutual",
         "Acciones y fondos mutuales",
@@ -193,7 +203,8 @@ document.addEventListener("DOMContentLoaded", () => {
       valores: [1, 2, 3, 4],
     },
     {
-      pregunta: "Si tuviera que invertir $20,000, cuál de las siguientes opciones de inversión le resultaría más atractiva:",
+      pregunta:
+        "Si tuviera que invertir $20,000, cuál de las siguientes opciones de inversión le resultaría más atractiva:",
       opciones: [
         "60% en inversiones de bajo riesgo 30% en inversiones de riesgo medio 10% en inversiones de alto riesgo",
         "30% en inversiones de bajo riesgo 40% en inversiones de riesgo medio 30% en inversiones de alto riesgo",
@@ -202,9 +213,34 @@ document.addEventListener("DOMContentLoaded", () => {
       valores: [1, 2, 3],
     },
     {
-      pregunta: "Tu amigo y vecino, un geólogo experimentado, está reuniendo a un grupo de inversores para financiar un proyecto de exploración minera de oro. Si el proyecto tiene éxito, podría recuperar de 50 a 100 veces la inversión. Si la mina fracasa, toda la inversión no vale nada. Tu amigo estima que la probabilidad de éxito es solo del 20 %. Si tuvieras el dinero, cuánto invertirías:",
+      pregunta:
+        "Tu amigo y vecino, un geólogo experimentado, está reuniendo a un grupo de inversores para financiar un proyecto de exploración minera de oro. Si el proyecto tiene éxito, podría recuperar de 50 a 100 veces la inversión. Si la mina fracasa, toda la inversión no vale nada. Tu amigo estima que la probabilidad de éxito es solo del 20 %. Si tuvieras el dinero, cuánto invertirías:",
       opciones: ["Nada", "Un mes de salario", "Tres meses de salario", "Seis meses de salario"],
       valores: [1, 2, 3, 4],
+    },
+  ]
+
+  // Preguntas filtro (nuevas)
+  const preguntasFiltro = [
+    {
+      pregunta: "¿Cuál es la principal ventaja de invertir en fondos mutuos?",
+      opciones: ["Garantía de ganancias", "Diversificación del riesgo", "Exención de impuestos", "Liquidez inmediata"],
+      valores: [0, 1, 0, 0],
+    },
+    {
+      pregunta: '¿Qué es un "dividendo" en el contexto de acciones?',
+      opciones: [
+        "Un préstamo que la empresa obtiene de los accionistas",
+        "Una parte de las utilidades distribuidas a los accionistas",
+        "El costo de comprar una acción",
+        "La deuda de la empresa con sus inversores",
+      ],
+      valores: [0, 1, 0, 0],
+    },
+    {
+      pregunta: "¿Usted es venezolano y reside o ha estado residenciado en Venezuela en los últimos 20 años?",
+      opciones: ["Sí", "No"],
+      valores: [1, 0],
     },
   ]
 
@@ -242,25 +278,62 @@ document.addEventListener("DOMContentLoaded", () => {
     efectoRebano: [14, 15, 16, 17],
   }
 
+  // Descripciones de los sesgos cognitivos
+  const descripcionesSesgos = {
+    introduccion:
+      "Los sesgos cognitivos son errores sistemáticos en el pensamiento que pueden llevarnos a tomar decisiones irracionales o a interpretar la información de forma errónea. Las heurísticas, por otro lado, son atajos mentales que utilizamos para simplificar la toma de decisiones, pero pueden ser fuente de sesgos si no se utilizan correctamente. En este cuestionario medimos el impacto de una serie de sesgos sobre tus decisiones de inversión:",
+    heuristicaRepresentatividad:
+      "Es un atajo mental que utilizamos para evaluar la probabilidad de que un suceso ocurra basándonos en la similitud que tiene con un estereotipo o prototipo mental.",
+    sobreconfianza:
+      "Es la tendencia a sobreestimar la seguridad con que se toman decisiones, o a creer que se tiene un conocimiento o habilidad superior al que realmente se tiene.",
+    sesgoAnclaje:
+      'Hace que confiemos excesivamente en la primera información que recibimos, la cual actúa como un "ancla" para nuestras decisiones posteriores.',
+    falaciaJugador:
+      "Creencia de que la probabilidad de que se produzca un acontecimiento aleatorio en el futuro está influida por la historia pasada de ese tipo de acontecimientos.",
+    sesgoCapacidad:
+      "Tienden a sobreestimar su competencia en esa área, mientras que aquellos con más capacidad tienden a subestimarla.",
+    aversionPerdida: "Impulsa a sentir las pérdidas con mayor intensidad que las ganancias.",
+    aversionRemordimiento:
+      "Lleva a tomar decisiones que, aunque pueden no ser las mejores en términos de resultados, buscan evitar la posibilidad de arrepentirse en el futuro.",
+    contabilidadMental:
+      "Se refiere a asignar diferentes valores a la misma cantidad de dinero dependiendo de su origen.",
+    efectoRebano:
+      "Es una tendencia a seguir las acciones o decisiones de otros, especialmente en situaciones de incertidumbre o presión social.",
+  }
+
   // Inicializar formularios
   initUserInfoForm()
   initEmocionalForm()
   initRiesgoForm()
+  initFiltroForm() // Inicializar el formulario de preguntas filtro
   initSesgosForm()
   initResultsSection()
 
+  // Buscar todos los botones "Anterior" y añadir event listeners
+  document.querySelectorAll(".back-btn").forEach((button) => {
+    button.addEventListener("click", function () {
+      const targetSection = this.getAttribute("data-target")
+      if (targetSection) {
+        showSection(targetSection)
+      }
+    })
+  })
+
   // Formulario de información del usuario
+  // Modificar la función initUserInfoForm() para hacer el correo opcional
   function initUserInfoForm() {
     const form = document.getElementById("user-info-form")
     form.addEventListener("submit", (e) => {
       e.preventDefault()
-      userData.nombre = document.getElementById("nombre").value
-      userData.correo = document.getElementById("correo").value
+      //userData.nombre = document.getElementById("nombre").value
+      const emailInput = document.getElementById("correo").value
+      userData.correo = emailInput.trim() === "" ? "anónimo" : emailInput
       showSection("test-emocional")
     })
   }
 
   // Formulario de inteligencia emocional
+  // Modificar la función initEmocionalForm para usar el nuevo diseño de opciones
   function initEmocionalForm() {
     const container = document.getElementById("emocional-questions")
     const form = document.getElementById("emocional-form")
@@ -277,6 +350,18 @@ document.addEventListener("DOMContentLoaded", () => {
       const optionsDiv = document.createElement("div")
       optionsDiv.className = "options"
 
+      const optionsContainer = document.createElement("div")
+      optionsContainer.className = "options-container five-options" // Añadir clase para 5 opciones
+      optionsDiv.appendChild(optionsContainer)
+
+      const optionLabels = [
+        "Nada de acuerdo",
+        "Algo de acuerdo",
+        "Bastante de acuerdo",
+        "Muy de acuerdo",
+        "Completamente de acuerdo",
+      ]
+
       for (let i = 1; i <= 5; i++) {
         const option = document.createElement("div")
         option.className = "radio-option"
@@ -290,11 +375,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const label = document.createElement("label")
         label.htmlFor = `emocional-${index}-${i}`
-        label.textContent = i
+        label.textContent = optionLabels[i - 1]
 
         option.appendChild(input)
         option.appendChild(label)
-        optionsDiv.appendChild(option)
+        optionsContainer.appendChild(option)
       }
 
       questionDiv.appendChild(optionsDiv)
@@ -322,6 +407,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Formulario de perfil de riesgo
+  // Modificar la función initRiesgoForm para asegurar que cada pregunta y sus opciones se mantengan juntas
   function initRiesgoForm() {
     const container = document.getElementById("riesgo-questions")
     const form = document.getElementById("riesgo-form")
@@ -337,6 +423,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const optionsDiv = document.createElement("div")
       optionsDiv.className = "options"
+
+      const optionsContainer = document.createElement("div")
+      // Añadir clase según el número de opciones
+      const numOptions = item.opciones.length
+      optionsContainer.className = `options-container ${numOptions}-options`
+      optionsDiv.appendChild(optionsContainer)
 
       item.opciones.forEach((opcion, i) => {
         const option = document.createElement("div")
@@ -355,7 +447,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         option.appendChild(input)
         option.appendChild(label)
-        optionsDiv.appendChild(option)
+        optionsContainer.appendChild(option)
       })
 
       questionDiv.appendChild(optionsDiv)
@@ -378,11 +470,81 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
+      showSection("preguntas-filtro") // Mostrar sección de preguntas filtro
+    })
+  }
+
+  // Formulario de preguntas filtro
+  function initFiltroForm() {
+    const container = document.getElementById("filtro-questions")
+    const form = document.getElementById("filtro-form")
+
+    // Generar preguntas filtro
+    preguntasFiltro.forEach((item, index) => {
+      const questionDiv = document.createElement("div")
+      questionDiv.className = "question"
+
+      const questionText = document.createElement("p")
+      // Usar un índice que continúe desde el último de riesgo
+      const questionNumber = preguntasRiesgo.length + index + 24
+      questionText.textContent = `${questionNumber}. ${item.pregunta}`
+      questionDiv.appendChild(questionText)
+
+      const optionsDiv = document.createElement("div")
+      optionsDiv.className = "options"
+
+      const optionsContainer = document.createElement("div")
+      // Añadir clase según el número de opciones
+      const numOptions = item.opciones.length
+      optionsContainer.className = `options-container ${numOptions}-options`
+      optionsDiv.appendChild(optionsContainer)
+
+      item.opciones.forEach((opcion, i) => {
+        const option = document.createElement("div")
+        option.className = "radio-option"
+
+        const input = document.createElement("input")
+        input.type = "radio"
+        input.name = `filtro-${index}`
+        input.id = `filtro-${index}-${i}`
+        input.value = item.valores[i]
+        input.required = true
+
+        const label = document.createElement("label")
+        label.htmlFor = `filtro-${index}-${i}`
+        label.textContent = opcion
+
+        option.appendChild(input)
+        option.appendChild(label)
+        optionsContainer.appendChild(option)
+      })
+
+      questionDiv.appendChild(optionsDiv)
+      container.appendChild(questionDiv)
+    })
+
+    // Manejar envío del formulario
+    form.addEventListener("submit", (e) => {
+      e.preventDefault()
+
+      // Recopilar respuestas
+      userData.respuestasFiltro = []
+      for (let i = 0; i < preguntasFiltro.length; i++) {
+        const selectedOption = document.querySelector(`input[name="filtro-${i}"]:checked`)
+        if (selectedOption) {
+          userData.respuestasFiltro.push(Number.parseInt(selectedOption.value))
+        } else {
+          alert("Por favor, responde todas las preguntas.")
+          return
+        }
+      }
+
       showSection("sesgos-cognitivos")
     })
   }
 
   // Formulario de sesgos cognitivos
+  // Modificar la función initSesgosForm para usar el nuevo diseño de opciones
   function initSesgosForm() {
     const container = document.getElementById("sesgos-questions")
     const form = document.getElementById("sesgos-form")
@@ -399,6 +561,19 @@ document.addEventListener("DOMContentLoaded", () => {
       const optionsDiv = document.createElement("div")
       optionsDiv.className = "options"
 
+      const optionsContainer = document.createElement("div")
+      optionsContainer.className = "options-container six-options" // Añadir clase para 6 opciones
+      optionsDiv.appendChild(optionsContainer)
+
+      const optionLabels = [
+        "Totalmente en desacuerdo",
+        "Muy en desacuerdo",
+        "Algo en desacuerdo",
+        "Algo de acuerdo",
+        "Muy de acuerdo",
+        "Totalmente de acuerdo",
+      ]
+
       for (let i = 1; i <= 6; i++) {
         const option = document.createElement("div")
         option.className = "radio-option"
@@ -412,11 +587,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const label = document.createElement("label")
         label.htmlFor = `sesgos-${index}-${i}`
-        label.textContent = i
+        label.textContent = optionLabels[i - 1]
 
         option.appendChild(input)
         option.appendChild(label)
-        optionsDiv.appendChild(option)
+        optionsContainer.appendChild(option)
       }
 
       questionDiv.appendChild(optionsDiv)
@@ -459,16 +634,30 @@ document.addEventListener("DOMContentLoaded", () => {
     // Calcular puntajes de inteligencia emocional
     const puntajeAtencion = calcularPuntajeRango(userData.respuestasEmocionales, 0, 8)
     const puntajeClaridad = calcularPuntajeRango(userData.respuestasEmocionales, 8, 16)
-    const puntajeReparacion = calcularPuntajeRango(userData.respuestasEmocionales, 16, 24)
+    const puntajeReparacion = calcularPuntajeRango(userData.respuestasEmocionales, 16, 23)
+
+    // Registrar los puntajes para depuración
+    console.log("Puntaje Atención:", puntajeAtencion)
+    console.log("Puntaje Claridad:", puntajeClaridad)
+    console.log("Puntaje Reparación:", puntajeReparacion)
 
     // Clasificar inteligencia emocional
     resultados.atencion = clasificarAtencion(puntajeAtencion)
     resultados.claridad = clasificarClaridad(puntajeClaridad)
     resultados.reparacion = clasificarReparacion(puntajeReparacion)
 
+    // Verificar las clasificaciones
+    console.log("Clasificación Atención:", resultados.atencion.nivel)
+    console.log("Clasificación Claridad:", resultados.claridad.nivel)
+    console.log("Clasificación Reparación:", resultados.reparacion.nivel)
+
     // Calcular perfil de riesgo
     const puntajeRiesgo = userData.respuestasRiesgo.reduce((sum, val) => sum + val, 0)
     resultados.perfilRiesgo = clasificarPerfilRiesgo(puntajeRiesgo)
+
+    // Calcular puntaje de preguntas filtro
+    const puntajeFiltro = userData.respuestasFiltro.reduce((sum, val) => sum + val, 0)
+    resultados.aprobado = puntajeFiltro === 3 ? "Aprobado" : "No aprobado"
 
     // Calcular sesgos cognitivos
     resultados.heuristicaRepresentatividad = clasificarSesgo(calcularMediaSesgo("heuristicaRepresentatividad"))
@@ -491,9 +680,28 @@ document.addEventListener("DOMContentLoaded", () => {
   // Calcular puntaje para un rango de preguntas
   function calcularPuntajeRango(respuestas, inicio, fin) {
     let suma = 0
-    for (let i = inicio; i < fin; i++) {
-      suma += respuestas[i]
+    // Verificamos que tenemos respuestas válidas
+    if (!respuestas || respuestas.length === 0) {
+      console.error("No hay respuestas para calcular")
+      return 0
     }
+
+    // Verificamos que fin está dentro del rango del array
+    const finReal = Math.min(fin, respuestas.length)
+    console.log(`Calculando rango desde ${inicio} hasta ${finReal - 1} (inclusive)`)
+    console.log(`Cantidad de preguntas consideradas: ${finReal - inicio}`)
+
+    // Sumamos las respuestas en el rango especificado
+    for (let i = inicio; i < finReal; i++) {
+      if (respuestas[i] !== undefined) {
+        console.log(`Respuesta ${i}: ${respuestas[i]}`)
+        suma += respuestas[i]
+      } else {
+        console.error(`No existe respuesta en el índice ${i}`)
+      }
+    }
+
+    console.log(`Suma total de puntajes: ${suma}`)
     return suma
   }
 
@@ -520,11 +728,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Clasificar reparación
   function clasificarReparacion(puntaje) {
-    if (puntaje <= 23)
-      return { nivel: "Baja", descripcion: "Baja capacidad de reparación.", porcentaje: (puntaje / 40) * 100 }
-    if (puntaje <= 35)
-      return { nivel: "Adecuada", descripcion: "Adecuada capacidad de reparación.", porcentaje: (puntaje / 40) * 100 }
-    return { nivel: "Excelente", descripcion: "Excelente capacidad de reparación.", porcentaje: (puntaje / 40) * 100 }
+    // El puntaje de reparación proviene de 7 preguntas, cada una con valor máximo de 5
+    // Por lo tanto, el puntaje máximo es 35, pero las preguntas van del índice 16 al 22 (7 preguntas)
+    const porcentaje = (puntaje / 35) * 100
+
+    // Corregimos los umbrales según los datos correctos para la reparación (ajustados para 7 preguntas)
+    if (puntaje <= 21) {
+      console.log("Clasificado como: Baja")
+      return { nivel: "Baja", descripcion: "Baja capacidad de reparación.", porcentaje: porcentaje }
+    }
+    if (puntaje <= 30) {
+      console.log("Clasificado como: Adecuada")
+      return { nivel: "Adecuada", descripcion: "Adecuada capacidad de reparación.", porcentaje: porcentaje }
+    }
+
+    console.log("Clasificado como: Excelente")
+    return { nivel: "Excelente", descripcion: "Excelente capacidad de reparación.", porcentaje: porcentaje }
   }
 
   // Clasificar perfil de riesgo
@@ -577,22 +796,22 @@ document.addEventListener("DOMContentLoaded", () => {
   // Mostrar resultados en la interfaz
   function mostrarResultados(resultados) {
     // Inteligencia Emocional
-    document.getElementById("resultado-atencion").textContent =
-      `${resultados.atencion.nivel}: ${resultados.atencion.descripcion}`
-    document.getElementById("bar-atencion").style.width = `${resultados.atencion.porcentaje}%`
+    document.getElementById("nivel-atencion").textContent = resultados.atencion.nivel
+    document.getElementById("descripcion-atencion").textContent = resultados.atencion.descripcion
+    updateCircleProgress("circle-atencion", "percentage-atencion", resultados.atencion.porcentaje)
 
-    document.getElementById("resultado-claridad").textContent =
-      `${resultados.claridad.nivel}: ${resultados.claridad.descripcion}`
-    document.getElementById("bar-claridad").style.width = `${resultados.claridad.porcentaje}%`
+    document.getElementById("nivel-claridad").textContent = resultados.claridad.nivel
+    document.getElementById("descripcion-claridad").textContent = resultados.claridad.descripcion
+    updateCircleProgress("circle-claridad", "percentage-claridad", resultados.claridad.porcentaje)
 
-    document.getElementById("resultado-reparacion").textContent =
-      `${resultados.reparacion.nivel}: ${resultados.reparacion.descripcion}`
-    document.getElementById("bar-reparacion").style.width = `${resultados.reparacion.porcentaje}%`
+    document.getElementById("nivel-reparacion").textContent = resultados.reparacion.nivel
+    document.getElementById("descripcion-reparacion").textContent = resultados.reparacion.descripcion
+    updateCircleProgress("circle-reparacion", "percentage-reparacion", resultados.reparacion.porcentaje)
 
     // Perfil de Riesgo
-    document.getElementById("resultado-riesgo").textContent =
-      `${resultados.perfilRiesgo.nivel}: ${resultados.perfilRiesgo.descripcion}`
-    document.getElementById("bar-riesgo").style.width = `${resultados.perfilRiesgo.porcentaje}%`
+    document.getElementById("nivel-riesgo").textContent = resultados.perfilRiesgo.nivel
+    document.getElementById("descripcion-riesgo").textContent = resultados.perfilRiesgo.descripcion
+    updateCircleProgress("circle-riesgo", "percentage-riesgo", resultados.perfilRiesgo.porcentaje)
 
     // Sesgos Cognitivos
     document.getElementById("resultado-representatividad").textContent = resultados.heuristicaRepresentatividad
@@ -609,15 +828,37 @@ document.addEventListener("DOMContentLoaded", () => {
     showSection("resultados")
   }
 
+  // Actualizar indicador de progreso circular
+  function updateCircleProgress(circleId, percentageId, value) {
+    const circle = document.getElementById(circleId)
+    const percentage = document.getElementById(percentageId)
+
+    if (circle && percentage) {
+      // Verificar que el valor es un número válido
+      let safeValue = isNaN(value) ? 0 : value
+      // Asegurar que el valor esté entre 0 y 100
+      safeValue = Math.min(Math.max(safeValue, 0), 100)
+
+      // Actualizar el gradiente cónico para mostrar el progreso
+      circle.style.background = `conic-gradient(var(--primary-color) ${safeValue}%, #e5e7eb ${safeValue}%)`
+
+      // Actualizar el texto del porcentaje
+      percentage.textContent = `${Math.round(safeValue)}%`
+    } else {
+      console.error(`No se encontraron los elementos con ID ${circleId} o ${percentageId}`)
+    }
+  }
+
   // Enviar resultados a Google Sheets
   function enviarResultados(resultados) {
     const dataToSend = {
-      nombre: userData.nombre,
+      //nombre: userData.nombre,
       correo: userData.correo,
       atencion: resultados.atencion.nivel,
       claridad: resultados.claridad.nivel,
       reparacion: resultados.reparacion.nivel,
       perfilRiesgo: resultados.perfilRiesgo.nivel,
+      aprobado: resultados.aprobado, // Aseguramos que esto se envía
       heuristicaRepresentatividad: resultados.heuristicaRepresentatividad,
       sobreconfianza: resultados.sobreconfianza,
       sesgoAnclaje: resultados.sesgoAnclaje,
@@ -628,6 +869,8 @@ document.addEventListener("DOMContentLoaded", () => {
       contabilidadMental: resultados.contabilidadMental,
       efectoRebano: resultados.efectoRebano,
     }
+
+    console.log("Estado de aprobación enviado:", resultados.aprobado)
 
     fetch(SCRIPT_URL, {
       method: "POST",
@@ -663,12 +906,14 @@ document.addEventListener("DOMContentLoaded", () => {
       correo: "",
       respuestasEmocionales: [],
       respuestasRiesgo: [],
+      respuestasFiltro: [],
       respuestasSesgos: [],
     }
 
     document.getElementById("user-info-form").reset()
     document.getElementById("emocional-form").reset()
     document.getElementById("riesgo-form").reset()
+    document.getElementById("filtro-form").reset()
     document.getElementById("sesgos-form").reset()
   }
 })
