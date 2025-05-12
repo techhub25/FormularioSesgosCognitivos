@@ -7,7 +7,7 @@
   --light-text: #6b7280;
   --background-color: #ffffff;
   --light-background: #f9fafb;
-  --border-color: #e5e7eb;
+  --border-color: #4f46e5;
   --option-bg: #f3f4f6;
   --option-selected: #4f46e5;
   --option-selected-text: #ffffff;
@@ -427,7 +427,7 @@ input[type="email"] {
   font-weight: 700;
   color: var(--primary-color);
   margin-bottom: 0.75rem;
-  padding-bottom: 0.5rem;
+  padding-bottom: srem;
   border-bottom: 2px solid var(--primary-color);
   display: inline-block;
 }
@@ -718,3 +718,4 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+ 
