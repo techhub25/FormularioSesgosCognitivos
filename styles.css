@@ -184,7 +184,7 @@ input[type="email"] {
 .question {
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 5px solid var(--border-color);
   width: 100%;
   clear: both;
 }
